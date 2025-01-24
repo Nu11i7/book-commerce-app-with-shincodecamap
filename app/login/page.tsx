@@ -3,7 +3,7 @@ import { ClientSafeProvider, getProviders, LiteralUnion, signIn } from "next-aut
 import { BuiltInProviderType } from "next-auth/providers/index";
 import { useEffect, useState } from "react";
 
-// eslint-disable-next-line @next/next/no-async-client-component
+
 function Login() {
 
     const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);

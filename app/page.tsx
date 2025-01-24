@@ -7,7 +7,6 @@ import { BookType, User, Purchase } from "./types/types";
 import { nextAuthOptions } from "./lib/next-auth/options";
 
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
 
   const { contents } = await getAllBooks();
