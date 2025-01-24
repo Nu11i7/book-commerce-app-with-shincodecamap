@@ -11,19 +11,23 @@ export async function POST(request: Request) {
     try {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
 
+        const userId = session.client_reference_id;
+        const bookId = session.metadata?.bookId;
+
+        if (!userId || !bookId) {
+            return NextResponse.json(
+              { message: "Invalid session data: userId or bookId is missing" },
+              { status: 400 }
+            );
+          }
+
         const existingPurchase = await prisma.purchase.findFirst({
-            where: {
-                userId: session.client_reference_id!,
-                bookId: session.metadata?.bookId!,
-            },
+            where: { userId, bookId },
         });
 
         if(!existingPurchase) {
             const purchase = await prisma.purchase.create({
-                data: {
-                    userId: session.client_reference_id!,
-                    bookId: session.metadata?.bookId!,
-                },
+                data: { userId, bookId },
             });
             return NextResponse.json({ purchase });
         } else {
