@@ -12,7 +12,6 @@ type BookProps = {
   isPurchased: boolean;
 };
 
-
 const Book = ({ book, isPurchased }: BookProps) => {
   const { data: session } = useSession();
   const user: any = session?.user;
